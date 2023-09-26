@@ -95,6 +95,9 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  //todo exercise 1 nè
+	  // abc
+	  //xyz
+	  //dbc
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

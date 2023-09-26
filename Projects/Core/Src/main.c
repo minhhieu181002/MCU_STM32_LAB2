@@ -94,7 +94,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  //todo exercise 1 nè
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

@@ -95,6 +95,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
 	  //todo exercise 1 nè
+	  //giờ làm bài 2 nha
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

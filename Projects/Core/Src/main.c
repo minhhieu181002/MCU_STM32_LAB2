@@ -260,7 +260,7 @@ int main(void)
     /* USER CODE END WHILE */
 	  if(timer1_flag == 1){
 		  // blink 4 7-SEG lEDs for a half second
-		  setTimer1(50);
+		  setTimer1(25);
 		  if(index_led >= 4){
 			  index_led = 0;
 		  }

@@ -64,20 +64,20 @@ void Error_Handler(void);
 #define EN0_GPIO_Port GPIOA
 #define EN1_Pin GPIO_PIN_7
 #define EN1_GPIO_Port GPIOA
-#define SEG0_Pin GPIO_PIN_0
-#define SEG0_GPIO_Port GPIOB
-#define SEG1_Pin GPIO_PIN_1
-#define SEG1_GPIO_Port GPIOB
-#define SEG2_Pin GPIO_PIN_2
-#define SEG2_GPIO_Port GPIOB
-#define SEG3_Pin GPIO_PIN_3
-#define SEG3_GPIO_Port GPIOB
-#define SEG4_Pin GPIO_PIN_4
-#define SEG4_GPIO_Port GPIOB
-#define SEG5_Pin GPIO_PIN_5
-#define SEG5_GPIO_Port GPIOB
-#define SEG6_Pin GPIO_PIN_6
-#define SEG6_GPIO_Port GPIOB
+#define SEG7_0_Pin GPIO_PIN_0
+#define SEG7_0_GPIO_Port GPIOB
+#define SEG7_1_Pin GPIO_PIN_1
+#define SEG7_1_GPIO_Port GPIOB
+#define SEG7_2_Pin GPIO_PIN_2
+#define SEG7_2_GPIO_Port GPIOB
+#define SEG7_3_Pin GPIO_PIN_3
+#define SEG7_3_GPIO_Port GPIOB
+#define SEG7_4_Pin GPIO_PIN_4
+#define SEG7_4_GPIO_Port GPIOB
+#define SEG7_5_Pin GPIO_PIN_5
+#define SEG7_5_GPIO_Port GPIOB
+#define SEG7_6_Pin GPIO_PIN_6
+#define SEG7_6_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

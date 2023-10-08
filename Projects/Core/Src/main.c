@@ -305,6 +305,13 @@ void update7SEG ( int index ){
 			break ;
  	 }
  }
+void shift_left(uint16_t array[8]) {
+	uint16_t temp = array[7];
+	for (int i = 7; i > 0; i--) {
+		array[i] = array[i - 1];
+	}
+	array[0] = temp;
+}
 /* USER CODE END 0 */
 
 /**
@@ -346,11 +353,11 @@ int main(void)
 
  int i = -1;
  setTimer1(2);
+ setTimer2(3);
  while (1)
  {
   	  if (timer1_flag == 1) {
-  		 // Display character 'A'
-
+  		 //update led matrix
   		  setTimer1(1);
   		  i++;
   		  if (i >= MAX_LED_MATRIX) {
@@ -360,7 +367,10 @@ int main(void)
   		  GPIOA->ODR = ~0x8000 >> i;
   		  GPIOB->ODR = matrix_buffer[i];
   	  }
-
+  	  if (timer2_flag == 1){
+  		  setTimer2(100);
+  		  shift_left(matrix_buffer);
+  	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

@@ -59,8 +59,26 @@ static void MX_TIM2_Init(void);
 const int MAX_LED = 4;
 int index_led = 0;
 int led_buffer [4] = {1, 2, 3, 4};
+int hour = 15, minute = 8, second = 50;
+int timer_counter = 0;
 
+void updateClockBuffer() {
+	if (hour < 10) {
+		led_buffer[0] = 0;
+		led_buffer[1] = hour;
+	} else {
+		led_buffer[0] = hour / 10;
+		led_buffer[1] = hour % 10;
+	}
 
+	if (minute < 10) {
+		led_buffer[2] = 0;
+		led_buffer[3] = minute;
+	} else {
+		led_buffer[2] = minute / 10;
+		led_buffer[3] = minute % 10;
+	}
+}
 void display7SEG(int num) {
   switch(num) {
 	  case 0 : {
@@ -255,26 +273,45 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   setTimer1(2);
   setTimer2(3);
+  setTimer3(7);
   while (1)
   {
     /* USER CODE END WHILE */
-	  if(timer1_flag == 1){
-		  // blink 4 7-SEG lEDs for a half second
-		  setTimer1(25);
-		  if(index_led >= 4){
-			  index_led = 0;
-		  }
-		  update7SEG(index_led++);
-	  }
-    /* USER CODE BEGIN 3 */
-	  if(timer2_flag == 1){
-	  	  setTimer2(100);
-	  	  HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
-	  	  HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
-	    }
-  }
+	  if (timer1_flag == 1) {
+	  		  // Switching 4 LEDs 7 SEG
+	  		  setTimer1(10);
+	  		  if (index_led >= 4) index_led = 0;
+	  		  update7SEG(index_led++);
+
+	  	  }
+
+	  	  if (timer2_flag == 1) {
+	  		  // Blinking PA5 LED and DOT LED every second
+	  		  setTimer2(100);
+	  		  HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
+	  		  HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
+	  	  }
+
+	  	  if (timer3_flag == 1) {
+	  		  // UPDATE CLOCK BUFFER
+	  		  setTimer3(100);
+	  		  second++;
+	  		  if (second >= 60){
+	  			  second = 0;
+	  			  minute++;
+	  		  }
+	  		  if(minute >= 60){
+	  			  minute = 0;
+	  			  hour++;
+	  		  }
+	  		  if(hour >=24){
+	  			  hour = 0;
+	  		  }
+	  		  updateClockBuffer();
+	  	  }
 
   /* USER CODE END 3 */
+}
 }
 
 /**

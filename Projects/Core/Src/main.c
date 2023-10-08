@@ -258,14 +258,13 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  if(timer1_flag == 1){
-		  // blink 4 7-SEG lEDs for a half second
-		  setTimer1(25);
-		  if(index_led >= 4){
-			  index_led = 0;
-		  }
-		  update7SEG(index_led++);
-	  }
+	  if (timer1_flag == 1) {
+	  		  // Switching 4 LEDs 7 SEG half of second
+	  		  setTimer1(25);
+	  		  if (index_led >= 4) index_led = 0;
+	  		  update7SEG(index_led++);
+
+	  	  }
     /* USER CODE BEGIN 3 */
 	  if(timer2_flag == 1){
 	  	  setTimer2(100);
@@ -371,17 +370,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
-                          |EN2_Pin|EN3_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, EN0_Pin|EN1_Pin|EN2_Pin|LED_RED_Pin
+                          |EN3_Pin|DOT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, SEG0_Pin|SEG1_Pin|SEG2_Pin|SEG3_Pin
                           |SEG4_Pin|SEG5_Pin|SEG6_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : DOT_Pin LED_RED_Pin EN0_Pin EN1_Pin
-                           EN2_Pin EN3_Pin */
-  GPIO_InitStruct.Pin = DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
-                          |EN2_Pin|EN3_Pin;
+  /*Configure GPIO pins : EN0_Pin EN1_Pin EN2_Pin LED_RED_Pin
+                           EN3_Pin DOT_Pin */
+  GPIO_InitStruct.Pin = EN0_Pin|EN1_Pin|EN2_Pin|LED_RED_Pin
+                          |EN3_Pin|DOT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

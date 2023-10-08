@@ -56,12 +56,27 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-const int MAX_LED = 4;
-int index_led = 0;
-int led_buffer [4] = {1, 2, 3, 4};
-int hour = 15, minute = 8, second = 50;
-int timer_counter = 0;
 
+int counter = 100;
+const int MAX_LED = 4;
+const int MAX_LED_MATRIX = 8;
+int index_led = 0;
+int index_led_matrix = 0;
+int led_buffer[4] = {1, 2, 3, 4};
+
+uint16_t matrix_buffer[8] = {0xffff, 0x03ff, 0xedff, 0xeeff, 0xeeff, 0xedff, 0x03ff, 0xffff};
+uint16_t zero[8] = {0xffff, 0xc1ff, 0x80ff, 0xbaff, 0xb6ff, 0xaeff, 0x80ff, 0xc1ff};
+uint16_t one[8] = {0xffff, 0xbfff, 0xbfff, 0x80ff, 0x80ff, 0xbdff, 0xbfff, 0xffff};
+uint16_t two[8] = {0xffff, 0x99ff, 0x90ff, 0xb6ff, 0xa6ff, 0x8eff, 0x9cff, 0xbdff};
+uint16_t three[8] = {0xffff, 0xc9ff, 0x80ff, 0xb6ff, 0xb6ff, 0xb6ff, 0x9cff, 0xddff};
+uint16_t four[8] = {0xffff, 0xafff, 0x80ff, 0x80ff, 0xacff, 0xe9ff, 0xe3ff, 0xe7ff};
+uint16_t five[8] = {0xffff, 0xceff, 0x86ff, 0xb6ff, 0xb6ff, 0xb6ff, 0x90ff, 0xd0ff};
+uint16_t six[8] = {0xffff, 0xcfff, 0x87ff, 0xb6ff, 0xb6ff, 0xb4ff, 0x81ff, 0xc3ff};
+uint16_t seven[8] = {0xffff, 0xfcff, 0xf8ff, 0xf2ff, 0x86ff, 0x8eff, 0xfcff, 0xfcff};
+uint16_t eight[8] = {0xffff, 0xc9ff, 0x80ff, 0xb6ff, 0xb6ff, 0xb6ff, 0x80ff, 0xc9ff};
+uint16_t nine[8] = {0xffff, 0xe1ff, 0xc0ff, 0x96ff, 0xb6ff, 0xb6ff, 0xb0ff, 0xf9ff};
+
+int hour = 15, minute = 8, second = 50;
 void updateClockBuffer() {
 	if (hour < 10) {
 		led_buffer[0] = 0;
@@ -196,6 +211,62 @@ void display7SEG(int num) {
 	  }
   }
 }
+ void updateLEDMatrix(int index){
+      switch (index){
+          case 0:
+          	for (int i = 0; i < 8; i++) {
+          		matrix_buffer[i] = zero[i];
+          	}
+              break;
+          case 1:
+          	for (int i = 0; i < 8; i++) {
+          		matrix_buffer[i] = one[i];
+          	}
+              break;
+          case 2:
+          	for (int i = 0; i < 8; i++) {
+          		matrix_buffer[i] = two[i];
+          	}
+              break;
+          case 3:
+          	for (int i = 0; i < 8; i++) {
+          		matrix_buffer[i] = three[i];
+          	}
+              break;
+          case 4:
+          	for (int i = 0; i < 8; i++) {
+          		matrix_buffer[i] = four[i];
+          	}
+              break;
+          case 5:
+          	for (int i = 0; i < 8; i++) {
+          		matrix_buffer[i] = five[i];
+          	}
+              break;
+          case 6:
+          	for (int i = 0; i < 8; i++) {
+          		matrix_buffer[i] = six[i];
+          	}
+              break;
+          case 7:
+          	for (int i = 0; i < 8; i++) {
+          		matrix_buffer[i] = seven[i];
+          	}
+              break;
+          case 8:
+          	for (int i = 0; i < 8; i++) {
+          		matrix_buffer[i] = eight[i];
+          	}
+          	break;
+          case 9:
+          	for (int i = 0; i < 8; i++) {
+          		matrix_buffer[i] = nine[i];
+          	}
+          	break;
+          default:
+              break;
+      }
+  }
 void update7SEG ( int index ){
 	switch ( index ){
 		case 0:
@@ -271,48 +342,32 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  setTimer1(2);
-  setTimer2(3);
-  setTimer3(7);
-  while (1)
-  {
-    /* USER CODE END WHILE */
-	  if (timer1_flag == 1) {
-	  		  // Switching 4 LEDs 7 SEG
-	  		  setTimer1(10);
-	  		  if (index_led >= 4) index_led = 0;
-	  		  update7SEG(index_led++);
 
-	  	  }
 
-	  	  if (timer2_flag == 1) {
-	  		  // Blinking PA5 LED and DOT LED every second
-	  		  setTimer2(100);
-	  		  HAL_GPIO_TogglePin(GPIOA, DOT_Pin);
-	  		  HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
-	  	  }
+  int i = -1;
+    setTimer1(2);
+    while (1)
+    {
+  	  if (timer1_flag == 1) {
+  		 // Display character 'A'
 
-	  	  if (timer3_flag == 1) {
-	  		  // UPDATE CLOCK BUFFER
-	  		  setTimer3(100);
-	  		  second++;
-	  		  if (second >= 60){
-	  			  second = 0;
-	  			  minute++;
-	  		  }
-	  		  if(minute >= 60){
-	  			  minute = 0;
-	  			  hour++;
-	  		  }
-	  		  if(hour >=24){
-	  			  hour = 0;
-	  		  }
-	  		  updateClockBuffer();
-	  	  }
+  		  setTimer1(1);
+  		  i++;
+  		  if (i >= MAX_LED_MATRIX) {
+  			  i = 0;
 
-  /* USER CODE END 3 */
+  		  }
+  		  GPIOA->ODR = ~0x8000 >> i;
+  		  GPIOB->ODR = matrix_buffer[i];
+  	  }
+
+      /* USER CODE END WHILE */
+
+      /* USER CODE BEGIN 3 */
+    }
+    /* USER CODE END 3 */
 }
-}
+
 
 /**
   * @brief System Clock Configuration
@@ -409,25 +464,34 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
-                          |EN2_Pin|EN3_Pin, GPIO_PIN_RESET);
+                          |EN2_Pin|EN3_Pin|ENM2_Pin|ENM3_Pin
+                          |ENM4_Pin|ENM5_Pin|ENM6_Pin|ENM7_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, SEG0_Pin|SEG1_Pin|SEG2_Pin|SEG3_Pin
-                          |SEG4_Pin|SEG5_Pin|SEG6_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, SEG0_Pin|SEG1_Pin|SEG2_Pin|ROW2_Pin
+                          |ROW3_Pin|ROW4_Pin|ROW5_Pin|ROW6_Pin
+                          |ROW7_Pin|SEG3_Pin|SEG4_Pin|SEG5_Pin
+                          |SEG6_Pin|ROW0_Pin|ROW1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : DOT_Pin LED_RED_Pin EN0_Pin EN1_Pin
-                           EN2_Pin EN3_Pin */
+                           EN2_Pin EN3_Pin ENM2_Pin ENM3_Pin
+                           ENM4_Pin ENM5_Pin ENM6_Pin ENM7_Pin */
   GPIO_InitStruct.Pin = DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
-                          |EN2_Pin|EN3_Pin;
+                          |EN2_Pin|EN3_Pin|ENM2_Pin|ENM3_Pin
+                          |ENM4_Pin|ENM5_Pin|ENM6_Pin|ENM7_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SEG0_Pin SEG1_Pin SEG2_Pin SEG3_Pin
-                           SEG4_Pin SEG5_Pin SEG6_Pin */
-  GPIO_InitStruct.Pin = SEG0_Pin|SEG1_Pin|SEG2_Pin|SEG3_Pin
-                          |SEG4_Pin|SEG5_Pin|SEG6_Pin;
+  /*Configure GPIO pins : SEG0_Pin SEG1_Pin SEG2_Pin ROW2_Pin
+                           ROW3_Pin ROW4_Pin ROW5_Pin ROW6_Pin
+                           ROW7_Pin SEG3_Pin SEG4_Pin SEG5_Pin
+                           SEG6_Pin ROW0_Pin ROW1_Pin */
+  GPIO_InitStruct.Pin = SEG0_Pin|SEG1_Pin|SEG2_Pin|ROW2_Pin
+                          |ROW3_Pin|ROW4_Pin|ROW5_Pin|ROW6_Pin
+                          |ROW7_Pin|SEG3_Pin|SEG4_Pin|SEG5_Pin
+                          |SEG6_Pin|ROW0_Pin|ROW1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

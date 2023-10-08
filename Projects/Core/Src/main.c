@@ -212,41 +212,41 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   setTimer1(2);
-  setTimer2(3);
-  int led_status = 1;
-  while (1)
-  {
-	  if (timer1_flag == 1) {
-		  // switching 2 LED 7 SEG half of second
-		  setTimer1(50);
-		  switch(led_status) {
-			  case 1:
-				  HAL_GPIO_WritePin(GPIOA, EN0_Pin, 0);
-				  HAL_GPIO_WritePin(GPIOA, EN1_Pin, 1);
-				  led_status = 2;
-				  display7SEG(1);
-				  break;
-			  case 2:
-				  HAL_GPIO_WritePin(GPIOA, EN0_Pin, 1);
-				  HAL_GPIO_WritePin(GPIOA, EN1_Pin, 0);
-				  led_status = 1;
-				  display7SEG(2);
-				  break;
-			  default:
-				  break;
-		  }
-	  }
+    setTimer2(3);
+    int led_status = 1;
+    while (1)
+    {
+  	  if (timer1_flag == 1) {
+  		  // switching 2 LED 7 SEG half of second
+  		  setTimer1(50);
+  		  switch(led_status) {
+  			  case 1:
+  				  HAL_GPIO_WritePin(GPIOA, EN0_Pin, 0);
+  				  HAL_GPIO_WritePin(GPIOA, EN1_Pin, 1);
+  				  led_status = 2;
+  				  display7SEG(1);
+  				  break;
+  			  case 2:
+  				  HAL_GPIO_WritePin(GPIOA, EN0_Pin, 1);
+  				  HAL_GPIO_WritePin(GPIOA, EN1_Pin, 0);
+  				  led_status = 1;
+  				  display7SEG(2);
+  				  break;
+  			  default:
+  				  break;
+  		  }
+  	  }
 
-	  if (timer2_flag == 1) {
-		  // blinking PA5 LED every second
-		  setTimer2(100);
-		  HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
-	  }
-    /* USER CODE END WHILE */
+  	  if (timer2_flag == 1) {
+  		  // blinking PA5 LED every second
+  		  setTimer2(100);
+  		  HAL_GPIO_TogglePin(GPIOA, LED_RED_Pin);
+  	  }
+      /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
-  }
-  /* USER CODE END 3 */
+      /* USER CODE BEGIN 3 */
+    }
+    /* USER CODE END 3 */
 }
 
 /**

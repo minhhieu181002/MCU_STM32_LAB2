@@ -35,15 +35,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  15 .debug_ranges 000008d0  00000000  00000000  0002a908  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001635a  00000000  00000000  0002b1d8  2**0
+ 16 .debug_macro  00016372  00000000  00000000  0002b1d8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   00009777  00000000  00000000  00041532  2**0
+ 17 .debug_line   00009779  00000000  00000000  0004154a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    00082259  00000000  00000000  0004aca9  2**0
+ 18 .debug_str    000822af  00000000  00000000  0004acc3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000053  00000000  00000000  000ccf02  2**0
+ 19 .comment      00000053  00000000  00000000  000ccf72  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00002708  00000000  00000000  000ccf58  2**2
+ 20 .debug_frame  00002708  00000000  00000000  000ccfc8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -118,14 +118,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 
 
-  int i = -1;
+ int i = -1;
  8000168:	f04f 33ff 	mov.w	r3, #4294967295
  800016c:	607b      	str	r3, [r7, #4]
-    setTimer1(2);
+ setTimer1(2);
  800016e:	2002      	movs	r0, #2
  8000170:	f000 f916 	bl	80003a0 <setTimer1>
-    while (1)
-    {
+ while (1)
+ {
   	  if (timer1_flag == 1) {
  8000174:	4b0f      	ldr	r3, [pc, #60]	; (80001b4 <main+0x68>)
  8000176:	681b      	ldr	r3, [r3, #0]
@@ -295,9 +295,9 @@ static void MX_TIM2_Init(void)
  8000258:	4b1d      	ldr	r3, [pc, #116]	; (80002d0 <MX_TIM2_Init+0x94>)
  800025a:	f04f 4280 	mov.w	r2, #1073741824	; 0x40000000
  800025e:	601a      	str	r2, [r3, #0]
-  htim2.Init.Prescaler = 7999;
+  htim2.Init.Prescaler = 799;
  8000260:	4b1b      	ldr	r3, [pc, #108]	; (80002d0 <MX_TIM2_Init+0x94>)
- 8000262:	f641 723f 	movw	r2, #7999	; 0x1f3f
+ 8000262:	f240 321f 	movw	r2, #799	; 0x31f
  8000266:	605a      	str	r2, [r3, #4]
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
  8000268:	4b19      	ldr	r3, [pc, #100]	; (80002d0 <MX_TIM2_Init+0x94>)
@@ -412,13 +412,14 @@ static void MX_GPIO_Init(void)
  8000316:	683b      	ldr	r3, [r7, #0]
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
+  HAL_GPIO_WritePin(GPIOA, EN2_Pin|EN3_Pin|DOT_Pin|LED_RED_Pin
  8000318:	2200      	movs	r2, #0
- 800031a:	f64f 71f0 	movw	r1, #65520	; 0xfff0
+ 800031a:	f64f 71ee 	movw	r1, #65518	; 0xffee
  800031e:	4816      	ldr	r0, [pc, #88]	; (8000378 <MX_GPIO_Init+0xa4>)
  8000320:	f000 fc32 	bl	8000b88 <HAL_GPIO_WritePin>
-                          |EN2_Pin|EN3_Pin|ENM2_Pin|ENM3_Pin
-                          |ENM4_Pin|ENM5_Pin|ENM6_Pin|ENM7_Pin, GPIO_PIN_RESET);
+                          |EN0_Pin|EN1_Pin|EN2A8_Pin|EN3A9_Pin
+                          |ENM2_Pin|ENM3_Pin|ENM4_Pin|ENM5_Pin
+                          |ENM6_Pin|ENM7_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, SEG0_Pin|SEG1_Pin|SEG2_Pin|ROW2_Pin
@@ -426,16 +427,17 @@ static void MX_GPIO_Init(void)
  8000326:	f64f 717f 	movw	r1, #65407	; 0xff7f
  800032a:	4814      	ldr	r0, [pc, #80]	; (800037c <MX_GPIO_Init+0xa8>)
  800032c:	f000 fc2c 	bl	8000b88 <HAL_GPIO_WritePin>
-                          |SEG6_Pin|ROW0_Pin|ROW1_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : DOT_Pin LED_RED_Pin EN0_Pin EN1_Pin
-                           EN2_Pin EN3_Pin ENM2_Pin ENM3_Pin
-                           ENM4_Pin ENM5_Pin ENM6_Pin ENM7_Pin */
-  GPIO_InitStruct.Pin = DOT_Pin|LED_RED_Pin|EN0_Pin|EN1_Pin
- 8000330:	f64f 73f0 	movw	r3, #65520	; 0xfff0
+  /*Configure GPIO pins : EN2_Pin EN3_Pin DOT_Pin LED_RED_Pin
+                           EN0_Pin EN1_Pin EN2A8_Pin EN3A9_Pin
+                           ENM2_Pin ENM3_Pin ENM4_Pin ENM5_Pin
+                           ENM6_Pin ENM7_Pin */
+  GPIO_InitStruct.Pin = EN2_Pin|EN3_Pin|DOT_Pin|LED_RED_Pin
+ 8000330:	f64f 73ee 	movw	r3, #65518	; 0xffee
  8000334:	60bb      	str	r3, [r7, #8]
-                          |EN2_Pin|EN3_Pin|ENM2_Pin|ENM3_Pin
-                          |ENM4_Pin|ENM5_Pin|ENM6_Pin|ENM7_Pin;
+                          |EN0_Pin|EN1_Pin|EN2A8_Pin|EN3A9_Pin
+                          |ENM2_Pin|ENM3_Pin|ENM4_Pin|ENM5_Pin
+                          |ENM6_Pin|ENM7_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
  8000336:	2301      	movs	r3, #1
  8000338:	60fb      	str	r3, [r7, #12]
